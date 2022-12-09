@@ -2,6 +2,7 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   resolve: {
@@ -50,6 +51,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new Dotenv(),
     new VueLoaderPlugin(),
     new HtmlPlugin({
       // template: path.resolve(__dirname, "src/index.html"),
@@ -60,6 +62,7 @@ module.exports = {
     }),
   ],
   devServer: {
+    port: 8079,
     historyApiFallback: true,
   },
 };

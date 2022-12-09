@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 export default {
   namespaced: true,
   state() {
@@ -21,15 +23,20 @@ export default {
   },
   actions: {
     async fetchMovies({ commit }, payload) {
-      const { title, position } = payload;
-      const movies = await fetch(
-        `https://www.omdbapi.com?apikey=7035c60c&s=${title}`
-      ).then((res) => res.json());
+      const { position } = payload;
+      const res = await _searchMovies({
+        ...payload,
+      });
+      const { Search } = res.data;
       if (position === 'main') {
-        commit('updateResult', movies.Search);
+        commit('updateResult', Search);
       } else {
-        commit('headerUpdateMovie', movies.Search);
+        commit('headerUpdateMovie', Search);
       }
     },
   },
 };
+
+async function _searchMovies(payload) {
+  return await axios.post('/.netlify/functions/movies', payload);
+}
