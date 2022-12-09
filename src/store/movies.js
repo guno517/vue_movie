@@ -21,9 +21,9 @@ export default {
   },
   actions: {
     async fetchMovies({ commit }, payload) {
-      const { position } = payload;
+      const { title, position } = payload;
       const res = await _searchMovies({
-        ...payload,
+        title,
         method: 'GET',
       });
       const { Search } = res;
@@ -36,9 +36,9 @@ export default {
   },
 };
 
-async function _searchMovies(payload) {
-  return await fetch('/.netlify/functions/movies', {
+async function _searchMovies(options) {
+  return await fetch('/.netlify/functions/workspace', {
     method: 'POST',
-    body: JSON.stringify(payload),
+    body: JSON.stringify(options),
   }).then((res) => res.json());
 }
