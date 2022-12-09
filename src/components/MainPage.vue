@@ -123,6 +123,7 @@ export default {
 
   .movie-title{
     text-align: center;
+    width: 150px;
   }
   .movie-poster {
     width: 160px;
@@ -135,6 +136,8 @@ export default {
   cursor: pointer;
   border: 1px solid;
   padding: 10px;
+  height: 250px;
+  width: 160px;
 }
 
 @media(max-width: 1200px){
