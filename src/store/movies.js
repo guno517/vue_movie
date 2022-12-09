@@ -26,6 +26,7 @@ export default {
       const { position } = payload;
       const res = await _searchMovies({
         ...payload,
+        method: 'GET',
       });
       const { Search } = res.data;
       if (position === 'main') {
