@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   namespaced: true,
   state() {
@@ -16,17 +18,19 @@ export default {
     async fetchMovie({ commit }, payload) {
       const { id } = payload;
       try {
-        const movie = await fetch(
-          `https://www.omdbapi.com?apikey=7035c60c&i=${id}&plot=full`
-        ).then((res) => res.json());
-        commit('updateDetailMovie', {
-          detailMovie: movie,
+        const res = await _searchMovie({
+          ...payload,
         });
-        //합치고 나서
-        // commite('reset')
+        commit('updateDetailMovie', {
+          detailMovie: res.data,
+        });
       } catch (error) {
         console.error('특정 영화 정보 가져오기 실패');
       }
     },
   },
 };
+
+async function _searchMovie(options) {
+  return await axios.post('/.netlify/functions/movie', options);
+}
