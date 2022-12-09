@@ -8,6 +8,9 @@ exports.handler = async function (event) {
   const { data } = await axios({
     url: `https://www.omdbapi.com?apikey=${API_KEY}&s=${title}&page=3`,
     method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
     data: body,
   });
   return {
