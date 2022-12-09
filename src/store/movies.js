@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   namespaced: true,
   state() {
@@ -23,9 +25,10 @@ export default {
     async fetchMovies({ commit }, payload) {
       const { title, position } = payload;
       const res = await _searchMovies({
-        title,
+        ...payload,
       });
-      const { Search } = res;
+      console.log(res);
+      const { Search } = res.data;
       if (position === 'main') {
         commit('updateResult', Search);
       } else {
@@ -36,8 +39,9 @@ export default {
 };
 
 async function _searchMovies(options) {
-  return await fetch('/.netlify/functions/workspace', {
-    method: 'POST',
-    body: JSON.stringify(options),
-  }).then((res) => res.json());
+  // return await fetch('/.netlify/functions/workspace', {
+  //   method: 'POST',
+  //   body: JSON.stringify(options),
+  // }).then((res) => res.json());
+  return await axios.post('/.netlify/functions/workspace', options);
 }
