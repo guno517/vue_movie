@@ -24,9 +24,8 @@ export default {
       const { position } = payload;
       const res = await _searchMovies({
         ...payload,
-        method: 'GET',
       });
-      const { Search } = res.data;
+      const { Search } = res;
       if (position === 'main') {
         commit('updateResult', Search);
       } else {
@@ -38,7 +37,7 @@ export default {
 
 async function _searchMovies(payload) {
   return await fetch('/.netlify/functions/movies', {
-    method: 'GET',
+    method: 'POST',
     body: JSON.stringify(payload),
   }).then((res) => res.json());
 }
