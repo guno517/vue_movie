@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 export default {
   namespaced: true,
   state() {
@@ -39,5 +37,8 @@ export default {
 };
 
 async function _searchMovies(payload) {
-  return await axios.post('/.netlify/functions/movies', payload);
+  return await fetch('/.netlify/functions/movies', {
+    method: 'GET',
+    body: JSON.stringify(payload),
+  }).then((res) => res.json());
 }
